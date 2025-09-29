@@ -1,0 +1,38 @@
+services:
+  web:
+    build: .
+    container_name: django_web
+    # 开发阶段挂源码，保存即重启；生产去掉即可
+    volumes:
+      - ./start/static:/app/start/static
+    environment:
+      - DEBUG=0                 # 生产设为 0，开发可改 1
+      - DJANGO_SETTINGS_MODULE=start.settings
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py collectstatic --noinput &&
+        gunicorn start.wsgi:application -b 0.0.0.0:8000 -w 4
+      "
+    expose:
+      - "8000"                  # 只暴露给 nginx，不映射主机
+    networks:
+      - app-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: django_nginx
+    ports:
+      - "80:80"                 # 对外 HTTP，https 后续加证书
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./start/static:/app/start/static:ro
+      # 如有媒体文件再加一行：
+      # - ./start/media:/app/start/media:ro
+    depends_on:
+      - web
+    networks:
+      - app-net
+
+networks:
+  app-net:
