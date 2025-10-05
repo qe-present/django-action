@@ -106,11 +106,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+USE_TZ = True              # 必须 True
+TIME_ZONE = 'Asia/Shanghai'  # 业务所在时区（例：上海）
 
 USE_I18N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

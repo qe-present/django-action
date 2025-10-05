@@ -1,0 +1,107 @@
+@use "var" as *;
+@use "mixins" as *;
+
+/* 1. 骨架 */
+.mail-layout {
+  display: flex;
+  height: 100vh;
+  background: #fff;
+
+  /* 左侧列表 */
+  .list {
+    width: $side-width;
+    border-right: 1px solid $c-border;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: $spacing;
+
+    @include mobile {
+      width: 100%;
+      border-right: none;
+    }
+  }
+
+  /* 右侧详情 */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing * 1.5;
+
+    @include mobile {
+      display: none; // 移动端全屏列表，点击后再切详情
+      &.show {
+        display: block;
+      }
+    }
+  }
+}
+
+/* 2. 列表项 */
+.item {
+  padding: $spacing;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: background 0.2s;
+  @include ellipsis;
+
+  & + & {
+    margin-top: $spacing * 0.5;
+  }
+
+  &:hover {
+    background: $c-hover;
+  }
+
+  &.active {
+    background: $c-primary;
+    color: #fff;
+  }
+
+  &.unread {
+    font-weight: 600;
+    position: relative;
+    padding-left: $spacing * 1.5;
+
+    &::before {
+      // 未读小圆点
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: $c-unread;
+      border-radius: 50%;
+    }
+  }
+
+  h5 {
+    margin: 0 0 4px;
+    font-size: 0.95rem;
+  }
+
+  p {
+    margin: 0;
+    color: $c-muted;
+    font-size: 0.85rem;
+  }
+}
+
+/* 3. 详情头部工具栏 */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: $spacing;
+  margin-bottom: $spacing;
+  border-bottom: 1px solid $c-border;
+  padding-bottom: $spacing;
+}
+
+/* 4. 响应式：移动端上下分栏（可选） */
+@include mobile {
+  .mail-layout {
+    flex-direction: column;
+  }
+}

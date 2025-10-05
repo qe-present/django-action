@@ -6,6 +6,7 @@ class Email(models.Model):
     subject=models.CharField(max_length=500,blank=True,db_index=True)
     to=models.CharField(max_length=200,blank=True,db_index=True)
     from_email=models.CharField(max_length=200,blank=True)
+    from_name=models.CharField(max_length=200,blank=True)
     cc=models.JSONField(default=list,blank=True)
     bcc=models.JSONField(default=list,blank=True)
     date=models.DateTimeField(null=True,blank=True,db_index=True)
@@ -27,7 +28,19 @@ class Email(models.Model):
         return f"{self.folder} - {self.subject} - {self.date}"
 
 
-class EmailSerializer(serializers.ModelSerializer):
+class EmailAddSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Email
+        fields = '__all__'
+
+class EmailListSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+    class Meta:
+        model = Email
+        fields = 'uid','folder','subject','from_name','date'
+
+
+class EmailDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Email
         fields = '__all__'

@@ -1,1 +1,1 @@
-from  .email import Email,EmailSerializer
+from  .email import Email,EmailAddSerializer,EmailDetailSerializer,EmailListSerializer

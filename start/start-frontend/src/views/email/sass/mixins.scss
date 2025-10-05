@@ -1,0 +1,14 @@
+@use "var" as *;
+/* 单行省略 */
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 移动端 */
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}

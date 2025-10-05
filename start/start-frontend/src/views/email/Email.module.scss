@@ -1,0 +1,269 @@
+// Email.module.scss
+.layout {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f5f5;
+}
+
+// 左侧 - 显著增大宽度
+.sider {
+  width: 520px; // 从420px增加到520px，提供更多空间
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-right: none;
+  box-sizing: border-box;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+// 邮件列表头部（搜索、筛选等）
+.listHeader {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+// 邮件列表容器
+.emailList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.listItem {
+  border-bottom: 1px solid #f0f0f0;
+  margin: 0;
+  padding: 24px 28px; // 进一步增加内边距
+  cursor: pointer;
+  background: #fff;
+  border-left: 4px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    background: #f8f9fa;
+    transform: translateX(2px);
+  }
+
+  &.active {
+    background: #f0f8ff;
+    border-left-color: #1890ff;
+    box-shadow: inset 0 0 0 1px rgba(24, 144, 255, 0.1);
+  }
+}
+
+// 邮件项内容布局 - 优化空间利用
+.emailPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.senderInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0; // 允许文本截断
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #8c8c8c;
+  flex-shrink: 0;
+}
+
+.senderDetails {
+  flex: 1;
+  min-width: 0; // 重要：允许文本截断
+}
+
+.sender {
+  font-weight: 600;
+  color: #262626;
+  font-size: 15px;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.time {
+  color: #8c8c8c;
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.subject {
+  font-weight: 600;
+  color: #434343;
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.preview {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 邮件标签/状态
+.emailMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tag {
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+// 右侧
+.content {
+  flex: 1;
+  background: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  border-left: none;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; // 允许内容区域收缩
+}
+
+.card {
+  flex: 1;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.emailContent {
+  flex: 1;
+  padding: 32px 40px;
+}
+
+.emailHeader {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.emailMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.emailSender {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.senderInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.senderName {
+  font-weight: 600;
+  color: #262626;
+  font-size: 18px;
+  margin: 0 0 4px 0;
+}
+
+.senderEmail {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin: 0;
+}
+
+.emailDate {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.emailSubject {
+  font-size: 22px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.emailBody {
+  line-height: 1.7;
+  color: #434343;
+  font-size: 15px;
+
+  p {
+    margin: 0 0 20px 0;
+  }
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+  color: #8c8c8c;
+  padding: 40px;
+}
+
+.placeholderIcon {
+  font-size: 64px;
+  opacity: 0.4;
+}
+
+.placeholderText {
+  font-size: 18px;
+  text-align: center;
+}
+
+// 响应式调整
+@media (max-width: 1400px) {
+  .sider {
+    width: 480px; // 在较小屏幕上稍微缩小
+  }
+}
+
+@media (max-width: 1200px) {
+  .sider {
+    width: 440px; // 继续响应式调整
+  }
+}
