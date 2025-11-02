@@ -1,7 +1,17 @@
-import regex  # 注意：Python 标准库 re 不支持递归，用第三方 regex 模块
+from datetime import timedelta,date
+import regex
 
-s = '(SINCE 4-Oct-2025 BEFORE 4-Oct-2025)'
-pattern = regex.compile(r'(?<content>(?<rec>\((?:[^()]++|(?&rec))*\)))')
+from start.imap_tools import AND, MailBox
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-for m in pattern.finditer(s):
-    print(m.group('content')[1:-1])
+HOST = os.environ.get("HOST")
+EMAIL = os.environ.get("EMAIL")
+PASSWORD  = os.environ.get("PASSWORD")
+today = date.today()
+c1="SMALLER  8511"
+print(c1)
+with MailBox(HOST).login(EMAIL, PASSWORD) as box:
+    for msg in box.uids(criteria=c1,charset='utf-8'):
+        print(msg)

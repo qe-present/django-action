@@ -1,5 +1,10 @@
 import Email from "@/views/email"
+import {EmailContextProvider} from "@/context/EmailContextProvider.tsx";
 
 export default function Home() {
-  return <Email />
+  return (
+    <EmailContextProvider>
+      <Email />
+    </EmailContextProvider>
+  )
 }

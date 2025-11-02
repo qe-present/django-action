@@ -10,7 +10,9 @@ EMAIL = os.environ.get("EMAIL")
 PASSWORD = os.environ.get("PASSWORD")
 def message_to_dict(msg):
     raw_from = msg.headers.get('from', [''])[0]
-    from_name, _ = parseaddr(raw_from)
+    from_name, from_email = parseaddr(raw_from)
+    if not from_name:
+        from_name = from_email.split('@')[0]
 
     return {
         "uid": msg.uid,

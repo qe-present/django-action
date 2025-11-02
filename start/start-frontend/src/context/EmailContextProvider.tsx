@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import type { FC } from "react"
-import { getEmailList } from "@/util/email"
+import { getEmailList,getEmailById } from "@/util/email"
 import { EmailContext } from "./EmailContext"
 import type { Mail } from "@/types/email"
 
@@ -12,10 +12,18 @@ export const EmailContextProvider: FC<{ children: React.ReactNode }> = ({
   const get_email_list = async () => {
     try {
       const res = await getEmailList()
-      console.log("Fetched email list:", res.data)
       setEmailList(res.data ?? [])
     } catch {
       setEmailList([])
+    }
+  }
+  const get_email_by_id=async (id:number)=>{
+    try {
+        const res = await getEmailById(id)
+        return res.data
+    }
+    catch{
+
     }
   }
 
@@ -24,7 +32,7 @@ export const EmailContextProvider: FC<{ children: React.ReactNode }> = ({
   }, [])
 
   return (
-    <EmailContext.Provider value={{ email_list, get_email_list }}>
+    <EmailContext.Provider value={{ email_list, get_email_list,get_email_by_id }}>
       {children}
     </EmailContext.Provider>
   )

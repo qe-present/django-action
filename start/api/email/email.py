@@ -33,14 +33,16 @@ class EmailAddSerializer(serializers.ModelSerializer):
         model = Email
         fields = '__all__'
 
+
 class EmailListSerializer(serializers.ModelSerializer):
     date = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
     class Meta:
         model = Email
-        fields = 'uid','folder','subject','from_name','date'
+        fields ='id', 'uid','folder','subject','from_name','date'
 
 
 class EmailDetailSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
     class Meta:
         model = Email
-        fields = '__all__'
+        fields = 'uid','text','html','attachments','date','from_name','from_email','subject','size'

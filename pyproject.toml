@@ -9,11 +9,11 @@ dependencies = [
     "djangorestframework>=3.16.1",
     "gunicorn>=23.0.0",
     "uvicorn>=0.35.0",
-    "imap-tools>=1.11.0",
     "dotenv>=0.9.9",
     "celery>=5.5.3",
     "redis>=6.4.0",
     "regex>=2025.9.18",
+    "django-cors-headers>=4.9.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

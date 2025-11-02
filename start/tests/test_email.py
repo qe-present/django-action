@@ -16,10 +16,7 @@ HOST = os.environ.get("HOST")
 EMAIL = os.environ.get("EMAIL")
 PASSWORD  = os.environ.get("PASSWORD")
 SSL       = True   # 993；如果想 143 就 False
-# --------------------------
 
-today_start = datetime.combine(date.today(), datetime.min.time()).replace(tzinfo=timezone.utc)
-tomorrow_start = today_start + timedelta(days=1)
 
 def open_connection():
     """返回已登录的 IMAP4 对象"""
@@ -33,24 +30,19 @@ def fetch_today_by_date_header(conn):
     """
     先让服务器粗筛最近 7 天，再按 Date 头精确过滤今天
     """
-    since_str = (date.today()).strftime('%d-%b-%Y')
-    print(since_str)
-    typ, data = conn.search(None, f'SINCE {since_str}')   # data=[b'uid1 uid2 ...']
+    typ, data = conn.search('utf-8','SMALLER 8511')
     if typ != 'OK':
         return
     uid_list = data[0].split()
     print(uid_list)
     for uid in uid_list:
         # 一次性拉下整个 RFC822 文本
-        typ, msg_data = conn.fetch(uid, '(RFC822)')
-        print(11111)
+        typ, msg_data = conn.fetch(uid, '(RFC822.SIZE BODY.PEEK[HEADER.FIELDS (DATE)])')
         raw_email = msg_data[0][1]
         msg = email.message_from_bytes(raw_email)
         date_header = msg.get('Date')
-        print('Date header:', date_header)
-        date_header = parsedate_to_datetime(date_header)
-        dt_sh = date_header.astimezone(ZoneInfo("Asia/Shanghai"))
-        print(dt_sh)
+        size = int(msg_data[0][0].split()[2])
+        print(size)
 
 
 if __name__ == '__main__':

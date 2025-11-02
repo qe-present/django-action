@@ -14,6 +14,7 @@ amqp==5.3.1
     # via kombu
 asgiref==3.9.1
     # via django
+    # via django-cors-headers
 billiard==4.2.2
     # via celery
 celery==5.5.3
@@ -33,7 +34,10 @@ click-repl==0.3.0
 colorama==0.4.6
     # via click
 django==5.2.6
+    # via django-cors-headers
     # via djangorestframework
+django-cors-headers==4.9.0
+    # via django-action
 djangorestframework==3.16.1
     # via django-action
 dotenv==0.9.9
@@ -42,8 +46,6 @@ gunicorn==23.0.0
     # via django-action
 h11==0.16.0
     # via uvicorn
-imap-tools==1.11.0
-    # via django-action
 kombu==5.5.4
     # via celery
 packaging==25.0

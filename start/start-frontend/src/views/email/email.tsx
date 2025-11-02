@@ -1,8 +1,7 @@
-// Email.tsx
-import {useState} from "react"
+import { useState} from "react"
 import {Card, Layout, List, Typography} from "antd"
 import {MailOutlined} from "@ant-design/icons"
-import type {Mail} from "@/types/email.ts"
+import type {ActiveMail,Mail} from "@/types/email.ts"
 import styles from "./Email.module.scss"
 import {useEmail} from "@/context/EmailContext.tsx" // ← 引入 sass
 
@@ -11,14 +10,20 @@ const {Title, Text} = Typography
 
 
 export function Email() {
+    const [activeMail, setActiveMail] = useState<ActiveMail | null>(null);
     const [activeId, setActiveId] = useState<number | null>(null)
-    const {email_list} = useEmail()
-    const activeMail = email_list.find((m) => m.id === activeId) ?? null
+    const {email_list,get_email_by_id} = useEmail()
+    const handleSelect=async (id: number) => {
+        setActiveId(id)
+        const res:ActiveMail[]=await get_email_by_id(id);
+        console.log(res[0]);
+        setActiveMail(res[0]);
+
+    }
 
 
     return (
         <Layout className={styles.layout}>
-            {/* 左侧列表 */}
             <Sider className={styles.sider} theme="light">
                 <List<Mail>
                     dataSource={email_list}
@@ -26,7 +31,7 @@ export function Email() {
                     renderItem={(mail) => (
                         <List.Item
                             className={`${styles.listItem} ${mail.id === activeId ? styles.active : ""}`}
-                            onClick={() => setActiveId(mail.id)}
+                            onClick={() => handleSelect(mail.id)}
                         >
                             {/* 左侧：图标 + 内容 */}
                             <div className={styles.leftWrap}>
@@ -42,20 +47,17 @@ export function Email() {
                     )}
                 />
             </Sider>
-
-            {/* 右侧详情 */}
             <Content className={styles.content}>
                 {activeMail ? (
                     <Card className={styles.card}>
                         <Title level={3} style={{marginBottom: 8}}>
                             {activeMail.subject}
                         </Title>
-                        <Text type="secondary">发件人：{activeMail.from}</Text>
+                        <Text type="secondary">发件人：{activeMail.from_email}</Text>
                         <div
-                            style={{marginTop: 24, whiteSpace: "pre-wrap", lineHeight: 1.8}}
-                        >
-                            {activeMail.body}
-                        </div>
+                          style={{ marginTop: 24, lineHeight: 1.8 }}
+                          dangerouslySetInnerHTML={{ __html:activeMail.html.trim() ? activeMail.html : activeMail.text }}
+                        />
                     </Card>
                 ) : (
                     <Card className={`${styles.card} ${styles.placeholder}`}>
